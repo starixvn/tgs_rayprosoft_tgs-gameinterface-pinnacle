@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Web;
@@ -264,6 +265,68 @@ internal class GameApiClient : IGameApiClient
             {
                 throw new GameInterfaceException(jsonNode["code"]!.GetValue<string>());
             }
+        }
+    }
+
+    public async IAsyncEnumerable<WagerResult> WagersAsync(
+        Uri apiUrl,
+        string agentCode,
+        string agentKey,
+        string secretKey,
+        DateTimeOffset dateFrom,
+        DateTimeOffset dateTo,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+
+    {
+        Dictionary<string, string> parameters = new Dictionary<string, string>
+        {
+            { "dateFrom", dateFrom.DatetimeConvertToString() },
+            { "dateTo", dateTo.DatetimeConvertToString() },
+            { "filterBy", "update_date" }
+        };
+
+        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+
+        Dictionary<string, string> headers = new Dictionary<string, string>
+        {
+            { "userCode", agentCode },
+            { "token", token }
+        };
+
+        var url = new Uri(apiUrl, "/b2b//report/all-wagers");
+        var jsonNode = await GetAsync(
+            apiUrl: url,
+            parameters: parameters,
+            headers: headers,
+            logPrefix: "wagers",
+            cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
+        if (!jsonNode.AsArray().Any() && !string.IsNullOrWhiteSpace(jsonNode["code"]?.GetValue<string>()))
+        {
+            throw new GameInterfaceException(jsonNode["code"]!.GetValue<string>());
+        }
+        foreach (var Wager in jsonNode.AsArray())
+        {
+            if (Wager is null)
+            {
+                continue;
+            }
+
+            yield return new WagerResult(
+                Wager["wagerId"]!.GetValue<long>(),
+                Sport: Wager["sport"]!.GetValue<string>(),
+                SportId: Wager["sportId"]!.GetValue<int>(),
+                UserCode: Wager["userCode"]!.GetValue<string>(),
+                Status: Enum.Parse<WagerStatus>(Wager["status"]!.GetValue<string>()),
+                WagerDateFm: Wager["wagerDateFm"]!.GetValue<string>().StringConvertToDatetime(),
+                SettleDateFm: Wager["settleDateFm"]?.GetValue<object>() is null
+                    ? DateTimeOffset.UnixEpoch
+                    : Wager["settleDateFm"]!.GetValue<string>().StringConvertToDatetime(),
+                Stake: Wager["stake"]!.GetValue<decimal>(),
+                Turnover: Wager["turnover"]!.GetValue<decimal>(),
+                WinLoss: Wager["winLoss"]!.GetValue<decimal>(),
+                AdditionalData: Wager.ToJsonString()
+                );
         }
     }
 

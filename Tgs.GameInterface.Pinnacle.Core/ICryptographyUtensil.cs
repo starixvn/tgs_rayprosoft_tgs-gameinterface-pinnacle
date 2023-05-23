@@ -1,6 +1,6 @@
 ﻿namespace Tgs.GameInterface.Pinnacle.Core;
 
-internal interface ICryptographyUtensil
+public interface ICryptographyUtensil
 {
     public string AesDecrypt(
         string source,

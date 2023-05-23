@@ -1,0 +1,32 @@
+﻿using Tgs.ServiceUtility;
+
+namespace Tgs.GameInterface.Pinnacle.Core.ApplicationServices;
+
+internal class FundOutGetService : IGetService<FundOutQuery, FundResult>
+{
+    private readonly IGameApiClient _client;
+
+    public FundOutGetService(
+        IGameApiClient client)
+    {
+        _client = client ?? throw new ArgumentNullException(nameof(client));
+    }
+
+    public async ValueTask<FundResult> GetAsync(FundOutQuery query, CancellationToken cancellationToken = default)
+    {
+        var result = await _client
+         .DepositAsync(
+             apiUrl: query.ApiUrl,
+             agentCode: query.AgentCode,
+             agentKey: query.AgentKey,
+             secretKey: query.SecretKey,
+             userCode: query.PlayerCode,
+             transactionId: query.TransactionId,
+             amount: query.Amount,
+             cancellationToken: cancellationToken)
+         .ConfigureAwait(false);
+
+        return new FundResult(
+            Res: result.Res);
+    }
+}

@@ -16,5 +16,7 @@ public interface IGameApiClient
 
     ValueTask LogoutAsync(Uri apiUrl, string agentCode, string agentKey, string secretKey, string userCode, CancellationToken cancellationToken = default);
 
+    IAsyncEnumerable<WagerResult> WagersAsync(Uri apiUrl, string agentCode, string agentKey, string secretKey, DateTimeOffset dateFrom, DateTimeOffset dateTo, CancellationToken cancellationToken = default);
+
     ValueTask<WithdrawResult> WithdrawAsync(Uri apiUrl, string agentCode, string agentKey, string secretKey, string userCode, string transactionId, decimal amount, CancellationToken cancellationToken = default);
 }
