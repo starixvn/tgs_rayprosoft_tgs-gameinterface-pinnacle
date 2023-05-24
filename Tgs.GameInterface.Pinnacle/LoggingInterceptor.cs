@@ -1,6 +1,5 @@
 ﻿using Grpc.Core;
 using Grpc.Core.Interceptors;
-using Tgs.GameInterface.Pinnacle;
 
 namespace Tgs.GameInterface.Pinnacle;
 

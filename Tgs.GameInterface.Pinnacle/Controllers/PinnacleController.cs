@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Tgs.ServiceUtility;
-using Tgs.GameInterface.Pinnacle.ViewModels;
 using Tgs.GameInterface.Pinnacle.Core.ApplicationServices;
+using Tgs.GameInterface.Pinnacle.ViewModels;
+using Tgs.ServiceUtility;
 
 namespace Tgs.GameInterface.Pinnacle.Controllers
 {

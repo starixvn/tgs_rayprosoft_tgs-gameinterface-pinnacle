@@ -6,6 +6,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Tgs.GameInterface.Pinnacle;
+using Tgs.GameInterface.Pinnacle.GrpcServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -116,6 +117,7 @@ _ = app.MapControllers();
 
 app.MapHealthChecks("/healthz");
 
+app.MapGrpcService<GameInterfacePinnacleGrpcService>();
 app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
 app.Run();
