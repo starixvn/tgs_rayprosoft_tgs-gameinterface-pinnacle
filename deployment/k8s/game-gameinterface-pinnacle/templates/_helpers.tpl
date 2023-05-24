@@ -50,7 +50,7 @@ app.kubernetes.io/name: {{ include "game-gameinterface-pinnacle.name" . }}
 app: {{ include "game-gameinterface-pinnacle.name" . }}
 tgs.kind: game
 tgs.game.kind: gameinterface
-tgs.gameprovider.kind: fachai
+tgs.gameprovider.kind: pinnacle
 {{- end }}
 
 {{/*
