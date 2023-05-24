@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.Pinnacle", "Tgs.GameInterface.Pinnacle\Tgs.GameInterface.Pinnacle.csproj", "{FA6C1C3A-D3FE-4F82-9B2F-7AC5CC3D0A32}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.Pinnacle.Core", "Tgs.GameInterface.Pinnacle.Core\Tgs.GameInterface.Pinnacle.Core.csproj", "{E13E3B7F-7FA6-4243-8672-ACD99891D1C6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.Pinnacle.Core.UnitTest", "Tgs.GameInterface.Pinnacle.Core.UnitTest\Tgs.GameInterface.Pinnacle.Core.UnitTest.csproj", "{3F8DD3EB-0FE6-4D51-AAB5-1CB9EDE0D661}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameInterface.Pinnacle.Client", "Tgs.GameInterface.Pinnacle.Client\Tgs.GameInterface.Pinnacle.Client.csproj", "{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA6C1C3A-D3FE-4F82-9B2F-7AC5CC3D0A32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA6C1C3A-D3FE-4F82-9B2F-7AC5CC3D0A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA6C1C3A-D3FE-4F82-9B2F-7AC5CC3D0A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA6C1C3A-D3FE-4F82-9B2F-7AC5CC3D0A32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E13E3B7F-7FA6-4243-8672-ACD99891D1C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E13E3B7F-7FA6-4243-8672-ACD99891D1C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E13E3B7F-7FA6-4243-8672-ACD99891D1C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E13E3B7F-7FA6-4243-8672-ACD99891D1C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F8DD3EB-0FE6-4D51-AAB5-1CB9EDE0D661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F8DD3EB-0FE6-4D51-AAB5-1CB9EDE0D661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F8DD3EB-0FE6-4D51-AAB5-1CB9EDE0D661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F8DD3EB-0FE6-4D51-AAB5-1CB9EDE0D661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BE5BFB03-B4F8-4CB9-91ED-FE5D0A289328}
+	EndGlobalSection
+EndGlobal
