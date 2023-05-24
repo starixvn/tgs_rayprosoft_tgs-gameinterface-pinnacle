@@ -86,7 +86,7 @@ public class InfoUnitTest
         builder.Query = query.ToString();
         string url = builder.ToString();
 
-        var content = "{\"userCode\":\"V020100001\",\"loginId\":\"4ucmqplxb029\",\"firstName\":\"\",\"lastName\":\"\",\"status\":\"ACTIVE\",\"availableBalance\":0.00,\"outstanding\":0.00,\"createdDate\":\"2023-05-18 02:18:40\",\"createdBy\":\"B2B\"}";
+        var content = "{\"userCode\":\"V020100001\",\"loginId\":\"4ucmqplxb029\",\"firstName\":\"\",\"lastName\":\"\",\"status\":\"ACTIVE\",\"availableBalance\":1100.00,\"outstanding\":0.00,\"createdDate\":\"2023-05-18 02:18:40\",\"createdBy\":\"B2B\"}";
 
         var handler = new MockHttpMessageHandler();
         _ = handler.Expect(HttpMethod.Get, url)
@@ -113,7 +113,8 @@ public class InfoUnitTest
 
         Assert.NotNull(actual);
         Assert.True(actual.IsPlayerExist);
-        Assert.Equal(0.0m, actual.Balance);
+        Assert.Equal(expected: 1100m, actual.AvailableBalance);
+        Assert.Equal(expected: 0m, actual.Outstanding);
     }
 
     [Fact]
@@ -168,5 +169,7 @@ public class InfoUnitTest
 
         Assert.NotNull(actual);
         Assert.False(actual.IsPlayerExist);
+        Assert.Equal(expected: 0m, actual.AvailableBalance);
+        Assert.Equal(expected: 0m, actual.Outstanding);
     }
 }

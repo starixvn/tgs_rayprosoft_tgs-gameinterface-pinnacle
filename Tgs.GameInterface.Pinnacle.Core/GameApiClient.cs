@@ -187,9 +187,12 @@ internal class GameApiClient : IGameApiClient
 
         return !string.IsNullOrWhiteSpace(jsonNode["code"]?.GetValue<string>())
             ? jsonNode["code"]!.GetValue<string>().Equals("104", StringComparison.OrdinalIgnoreCase)
-                ? new InfoResult(false, 0)
+                ? new InfoResult(false, 0, 0)
                 : throw new GameInterfaceException(jsonNode["code"]!.GetValue<string>())
-            : new InfoResult(true, jsonNode["outstanding"]!.GetValue<decimal>());
+            : new InfoResult(
+                true,
+                jsonNode["availableBalance"]!.GetValue<decimal>(),
+                jsonNode["outstanding"]!.GetValue<decimal>());
     }
 
     public async ValueTask<string> LoginV2Async(
@@ -302,7 +305,15 @@ internal class GameApiClient : IGameApiClient
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
 
-        var wagers = jsonNode.AsArray();
+        JsonArray wagers;
+        try
+        {
+            wagers = jsonNode.AsArray();
+        }
+        catch
+        {
+            throw new GameInterfaceException(jsonNode["code"]!.GetValue<string>());
+        }
 
         if (!wagers.Any())
         {

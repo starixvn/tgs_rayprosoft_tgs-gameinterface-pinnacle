@@ -25,6 +25,6 @@ internal class PlayerBalanceGetService : IGetService<PlayerBalanceQuery, PlayerB
 
         return new PlayerBalanceResult(
             result.IsPlayerExist,
-            result.Balance);
+            result.AvailableBalance);
     }
 }

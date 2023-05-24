@@ -20,7 +20,8 @@ public class PlayerBalanceGetServiceUnitTest
 
         var result = new InfoResult(
             IsPlayerExist: true,
-            Balance: 1m);
+            AvailableBalance: 1100m,
+            Outstanding: 0m);
         _ = fakeGameApiClient
              .InfoAsync(
                  apiUrl: Arg.Is(query.ApiUrl),
