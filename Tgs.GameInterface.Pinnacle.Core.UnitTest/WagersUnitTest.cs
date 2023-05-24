@@ -342,4 +342,63 @@ public class WagersUnitTest
         Assert.Equal(1m, actual.Single().Turnover);
         Assert.Equal(-1m, actual.Single().WinLoss);
     }
+
+    [Fact]
+    public async void Normal_Process_Emty()
+    {
+        var apiUrl = new Uri("https://paapistg.oreo88.com");
+        var agentCode = "V0201";
+        var agentKey = "8d0e9ac0-99d8-48c7-8307-bc328c4181f6";
+        var secretKey = "zenDIdY7Knuzmeen";
+        var dateFrom = DateTimeOffset.UtcNow.AddMinutes(-10);
+        var dateTo = DateTimeOffset.UtcNow;
+
+        var fakeTokenUtensil = Substitute.For<ITokenUtensil>();
+
+        var token = "rmqktX8oOfL/HOEBxqQnyrFwtOZVi2x/o66eEfVVpwgZmKEJ+fCCkHfqGYGi0qnuiq6LmQ76JioX+vpdfbcpdA==";
+        _ = fakeTokenUtensil
+            .GenerateToken(agentCode, agentKey, secretKey)
+            .Returns(token);
+
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        {
+            Port = -1
+        };
+        var query = HttpUtility.ParseQueryString(builder.Query);
+        query["dateFrom"] = dateFrom.DatetimeConvertToString();
+        query["dateTo"] = dateTo.DatetimeConvertToString();
+        query["filterBy"] = "update_date";
+        builder.Query = query.ToString();
+        string url = builder.ToString();
+
+        var content = "[]";
+
+        var handler = new MockHttpMessageHandler();
+        _ = handler.Expect(HttpMethod.Get, url)
+                .WithHeaders("userCode", agentCode)
+                .WithHeaders("token", token)
+                .Respond(HttpStatusCode.OK, new StringContent(content));
+
+        var fakeLog = NullLogger<GameApiClient>.Instance;
+        var fakeHttpClient = handler.ToHttpClient();
+
+        var client = new GameApiClient(
+            fakeLog,
+            fakeTokenUtensil,
+            fakeHttpClient);
+
+        var actual = await client
+            .WagersAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                dateFrom: dateFrom,
+                dateTo: dateTo)
+            .ToArrayAsync()
+            .ConfigureAwait(false);
+
+        Assert.NotNull(actual);
+        Assert.False(actual.Any());
+    }
 }

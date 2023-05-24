@@ -301,31 +301,35 @@ internal class GameApiClient : IGameApiClient
             logPrefix: "wagers",
             cancellationToken: cancellationToken)
             .ConfigureAwait(false);
-        if (!jsonNode.AsArray().Any() && !string.IsNullOrWhiteSpace(jsonNode["code"]?.GetValue<string>()))
+
+        var wagers = jsonNode.AsArray();
+
+        if (!wagers.Any())
         {
-            throw new GameInterfaceException(jsonNode["code"]!.GetValue<string>());
+            yield break;
         }
-        foreach (var Wager in jsonNode.AsArray())
+
+        foreach (var wager in jsonNode.AsArray())
         {
-            if (Wager is null)
+            if (wager is null)
             {
                 continue;
             }
 
             yield return new WagerResult(
-                Wager["wagerId"]!.GetValue<long>(),
-                Sport: Wager["sport"]!.GetValue<string>(),
-                SportId: Wager["sportId"]!.GetValue<int>(),
-                LoginId: Wager["loginId"]!.GetValue<string>(),
-                Status: Enum.Parse<WagerStatus>(Wager["status"]!.GetValue<string>()),
-                WagerDateFm: Wager["wagerDateFm"]!.GetValue<string>().StringConvertToDatetime(),
-                SettleDateFm: Wager["settleDateFm"]?.GetValue<object>() is null
+                wager["wagerId"]!.GetValue<long>(),
+                Sport: wager["sport"]!.GetValue<string>(),
+                SportId: wager["sportId"]!.GetValue<int>(),
+                LoginId: wager["loginId"]!.GetValue<string>(),
+                Status: Enum.Parse<WagerStatus>(wager["status"]!.GetValue<string>()),
+                WagerDateFm: wager["wagerDateFm"]!.GetValue<string>().StringConvertToDatetime(),
+                SettleDateFm: wager["settleDateFm"]?.GetValue<object>() is null
                     ? DateTimeOffset.UnixEpoch
-                    : Wager["settleDateFm"]!.GetValue<string>().StringConvertToDatetime(),
-                Stake: Wager["stake"]!.GetValue<decimal>(),
-                Turnover: Wager["turnover"]!.GetValue<decimal>(),
-                WinLoss: Wager["winLoss"]!.GetValue<decimal>(),
-                AdditionalData: Wager.ToJsonString()
+                    : wager["settleDateFm"]!.GetValue<string>().StringConvertToDatetime(),
+                Stake: wager["stake"]!.GetValue<decimal>(),
+                Turnover: wager["turnover"]!.GetValue<decimal>(),
+                WinLoss: wager["winLoss"]!.GetValue<decimal>(),
+                AdditionalData: wager.ToJsonString()
                 );
         }
     }
