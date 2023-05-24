@@ -316,7 +316,7 @@ internal class GameApiClient : IGameApiClient
                 Wager["wagerId"]!.GetValue<long>(),
                 Sport: Wager["sport"]!.GetValue<string>(),
                 SportId: Wager["sportId"]!.GetValue<int>(),
-                UserCode: Wager["userCode"]!.GetValue<string>(),
+                LoginId: Wager["loginId"]!.GetValue<string>(),
                 Status: Enum.Parse<WagerStatus>(Wager["status"]!.GetValue<string>()),
                 WagerDateFm: Wager["wagerDateFm"]!.GetValue<string>().StringConvertToDatetime(),
                 SettleDateFm: Wager["settleDateFm"]?.GetValue<object>() is null

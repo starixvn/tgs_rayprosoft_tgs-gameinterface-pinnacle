@@ -55,7 +55,7 @@ internal class GameRecordQueryService : IQueryService<GameRecordQuery, GameRecor
                 ExternalRoundId: result.WagerId.ToString(),
                 ExternalGame: result.Sport,
                 ExternalGameId: result.SportId.ToString(),
-                PlayerCode: result.UserCode,
+                PlayerCode: result.LoginId,
                 IsClosed: isClosed,
                 IsVoid: isVoid,
                 ExternalCreatedOn: result.WagerDateFm,

@@ -4,7 +4,7 @@ public record WagerResult(
     long WagerId,
     string Sport,
     int SportId,
-    string UserCode,
+    string LoginId,
     WagerStatus Status,
     DateTimeOffset WagerDateFm,
     DateTimeOffset SettleDateFm,
