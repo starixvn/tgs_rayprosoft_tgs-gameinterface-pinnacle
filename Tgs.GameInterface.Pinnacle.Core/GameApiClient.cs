@@ -329,7 +329,9 @@ internal class GameApiClient : IGameApiClient
 
             yield return new WagerResult(
                 wager["wagerId"]!.GetValue<long>(),
-                Sport: wager["sport"]!.GetValue<string>(),
+                Sport: wager["sport"]?.GetValue<object>() is null
+                    ? string.Empty
+                    : wager["sport"]!.GetValue<string>(),
                 SportId: wager["sportId"]!.GetValue<int>(),
                 LoginId: wager["loginId"]!.GetValue<string>(),
                 Status: Enum.Parse<WagerStatus>(wager["status"]!.GetValue<string>()),
