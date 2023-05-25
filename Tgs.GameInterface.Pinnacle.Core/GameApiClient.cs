@@ -296,7 +296,7 @@ internal class GameApiClient : IGameApiClient
             { "token", token }
         };
 
-        var url = new Uri(apiUrl, "/b2b//report/all-wagers");
+        var url = new Uri(apiUrl, "/b2b/report/all-wagers");
         var jsonNode = await GetAsync(
             apiUrl: url,
             parameters: parameters,

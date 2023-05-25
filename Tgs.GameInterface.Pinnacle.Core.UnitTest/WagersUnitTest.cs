@@ -27,7 +27,7 @@ public class WagersUnitTest
             .GenerateToken(agentCode, agentKey, secretKey)
             .Returns(token);
 
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
         {
             Port = -1
         };
@@ -85,7 +85,7 @@ public class WagersUnitTest
             .GenerateToken(agentCode, agentKey, secretKey)
             .Returns(token);
 
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
         {
             Port = -1
         };
@@ -144,7 +144,7 @@ public class WagersUnitTest
             .GenerateToken(agentCode, agentKey, secretKey)
             .Returns(token);
 
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
         {
             Port = -1
         };
@@ -203,7 +203,7 @@ public class WagersUnitTest
             .GenerateToken(agentCode, agentKey, secretKey)
             .Returns(token);
 
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
         {
             Port = -1
         };
@@ -256,6 +256,75 @@ public class WagersUnitTest
     }
 
     [Fact]
+    public async void Normal_Process_Parlay()
+    {
+        var apiUrl = new Uri("https://paapistg.oreo88.com");
+        var agentCode = "V0201";
+        var agentKey = "8d0e9ac0-99d8-48c7-8307-bc328c4181f6";
+        var secretKey = "zenDIdY7Knuzmeen";
+        var dateFrom = DateTimeOffset.UtcNow.AddMinutes(-10);
+        var dateTo = DateTimeOffset.UtcNow;
+
+        var fakeTokenUtensil = Substitute.For<ITokenUtensil>();
+
+        var token = "rmqktX8oOfL/HOEBxqQnyrFwtOZVi2x/o66eEfVVpwgZmKEJ+fCCkHfqGYGi0qnuiq6LmQ76JioX+vpdfbcpdA==";
+        _ = fakeTokenUtensil
+            .GenerateToken(agentCode, agentKey, secretKey)
+            .Returns(token);
+
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
+        {
+            Port = -1
+        };
+        var query = HttpUtility.ParseQueryString(builder.Query);
+        query["dateFrom"] = dateFrom.DatetimeConvertToString();
+        query["dateTo"] = dateTo.DatetimeConvertToString();
+        query["filterBy"] = "update_date";
+        builder.Query = query.ToString();
+        string url = builder.ToString();
+
+        var content = "[{\"wagerId\":50261806,\"eventId\":0,\"eventName\":null,\"parentEventName\":null,\"headToHead\":null,\"wagerDateFm\":\"2023-05-24 21:40:41\",\"eventDateFm\":\"2023-05-24 21:40:41\",\"settleDateFm\":\"2023-05-24 22:12:13\",\"status\":\"SETTLED\",\"homeTeam\":null,\"awayTeam\":null,\"selection\":null,\"handicap\":0.0,\"odds\":29.534,\"oddsFormat\":2,\"betType\":6,\"league\":null,\"leagueId\":0,\"stake\":1.0,\"sportId\":0,\"sport\":null,\"currencyCode\":\"CNY\",\"inplayScore\":\"0\",\"inPlay\":false,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"cancellationStatus\":null,\"parlaySelections\":[{\"selection\":\"Akiko Omae (Games)\",\"eventDateFm\":\"2023-05-24 20:30:00\",\"scores\":[{\"period\":1,\"score\":\"6-2\"},{\"period\":0,\"score\":\"12-5\"}],\"sportId\":33,\"sport\":\"Tennis\",\"league\":\"ITF Women Karuizawa - R1\",\"homeTeam\":\"Akiko Omae (Games)\",\"awayTeam\":\"Olivia Lincer (Games)\",\"betType\":2,\"leagueId\":8617,\"eventId\":1573836610,\"wagerId\":50261806,\"selectionType\":0,\"inplayScore\":null,\"inPlay\":true,\"odds\":1.56,\"handicap\":-7.5,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"legStatus\":\"LOSE\",\"eventName\":\"Akiko Omae (Games)-vs-Olivia Lincer (Games)\",\"point\":0,\"type\":\"\",\"teaserHDPPoint\":null,\"legId\":\"500b0827-2a1d-88c2-8cc8-bbacf2eae146\"},{\"selection\":\"Funa Kozaki (Sets)\",\"eventDateFm\":\"2023-05-24 20:30:00\",\"scores\":[],\"sportId\":33,\"sport\":\"Tennis\",\"league\":\"ITF Women Karuizawa - R1\",\"homeTeam\":\"Funa Kozaki (Sets)\",\"awayTeam\":\"Nana Kawagishi (Sets)\",\"betType\":1,\"leagueId\":8617,\"eventId\":1573836988,\"wagerId\":50261806,\"selectionType\":0,\"inplayScore\":null,\"inPlay\":true,\"odds\":5.79,\"handicap\":null,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"legStatus\":\"ACCEPTED\",\"eventName\":\"Funa Kozaki (Sets)-vs-Nana Kawagishi (Sets)\",\"point\":0,\"type\":\"\",\"teaserHDPPoint\":null,\"legId\":\"92750cc8-6393-d39c-6786-c24980cc1440\"},{\"selection\":\"Risa Ushijima (Games)\",\"eventDateFm\":\"2023-05-24 20:30:00\",\"scores\":[],\"sportId\":33,\"sport\":\"Tennis\",\"league\":\"ITF Women Karuizawa - R1\",\"homeTeam\":\"Risa Ushijima (Games)\",\"awayTeam\":\"Johanne Christine Svendsen (Games)\",\"betType\":2,\"leagueId\":8617,\"eventId\":1573836608,\"wagerId\":50261806,\"selectionType\":0,\"inplayScore\":null,\"inPlay\":true,\"odds\":1.06,\"handicap\":-2.5,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"legStatus\":\"ACCEPTED\",\"eventName\":\"Risa Ushijima (Games)-vs-Johanne Christine Svendsen (Games)\",\"point\":0,\"type\":\"\",\"teaserHDPPoint\":null,\"legId\":\"c7b82488-b234-0f7c-6038-c9ebd3afb95d\"}],\"category\":null,\"toWin\":29.53,\"toRisk\":1.0,\"product\":\"SB\",\"isResettle\":false,\"parlayMixOdds\":29.534,\"wagerType\":\"parlay\",\"competitors\":[],\"userCode\":\"V020100002\",\"loginId\":\"4ugz7klo94oa\",\"winLoss\":-1.0,\"turnover\":1.0,\"scores\":[],\"result\":\"LOSE\",\"masterWagerId\":50261806,\"wagerNum\":1,\"volume\":1.0,\"view\":\"D-Compact\"}]";
+
+        var handler = new MockHttpMessageHandler();
+        _ = handler.Expect(HttpMethod.Get, url)
+                .WithHeaders("userCode", agentCode)
+                .WithHeaders("token", token)
+                .Respond(HttpStatusCode.OK, new StringContent(content));
+
+        var fakeLog = NullLogger<GameApiClient>.Instance;
+        var fakeHttpClient = handler.ToHttpClient();
+
+        var client = new GameApiClient(
+            fakeLog,
+            fakeTokenUtensil,
+            fakeHttpClient);
+
+        var actual = await client
+            .WagersAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                dateFrom: dateFrom,
+                dateTo: dateTo)
+            .ToArrayAsync()
+            .ConfigureAwait(false);
+
+        Assert.NotNull(actual);
+        Assert.True(actual.Any());
+        Assert.Equal(50261806, actual.Single().WagerId);
+        Assert.Equal(string.Empty, actual.Single().Sport);
+        Assert.Equal(0, actual.Single().SportId);
+        Assert.Equal("4ugz7klo94oa", actual.Single().LoginId);
+        Assert.Equal(WagerStatus.SETTLED, actual.Single().Status);
+        Assert.Equal(DateTimeOffset.Parse("2023-05-24T21:40:41-04:00"), actual.Single().WagerDateFm);
+        Assert.Equal(DateTimeOffset.Parse("2023-05-24T22:12:13-04:00"), actual.Single().SettleDateFm);
+        Assert.Equal(1m, actual.Single().Stake);
+        Assert.Equal(1m, actual.Single().Turnover);
+        Assert.Equal(-1m, actual.Single().WinLoss);
+    }
+
+    [Fact]
     public async void Normal_Process_Pending()
     {
         var apiUrl = new Uri("https://paapistg.oreo88.com");
@@ -272,7 +341,7 @@ public class WagersUnitTest
             .GenerateToken(agentCode, agentKey, secretKey)
             .Returns(token);
 
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
         {
             Port = -1
         };
@@ -341,7 +410,7 @@ public class WagersUnitTest
             .GenerateToken(agentCode, agentKey, secretKey)
             .Returns(token);
 
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
         {
             Port = -1
         };
@@ -410,7 +479,7 @@ public class WagersUnitTest
             .GenerateToken(agentCode, agentKey, secretKey)
             .Returns(token);
 
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
+        var builder = new UriBuilder(new Uri(apiUrl, "/b2b/report/all-wagers"))
         {
             Port = -1
         };
@@ -460,74 +529,5 @@ public class WagersUnitTest
         Assert.Equal(1m, actual.Single().Stake);
         Assert.Equal(1m, actual.Single().Turnover);
         Assert.Equal(0.91m, actual.Single().WinLoss);
-    }
-
-    [Fact]
-    public async void Normal_Process_Parlay()
-    {
-        var apiUrl = new Uri("https://paapistg.oreo88.com");
-        var agentCode = "V0201";
-        var agentKey = "8d0e9ac0-99d8-48c7-8307-bc328c4181f6";
-        var secretKey = "zenDIdY7Knuzmeen";
-        var dateFrom = DateTimeOffset.UtcNow.AddMinutes(-10);
-        var dateTo = DateTimeOffset.UtcNow;
-
-        var fakeTokenUtensil = Substitute.For<ITokenUtensil>();
-
-        var token = "rmqktX8oOfL/HOEBxqQnyrFwtOZVi2x/o66eEfVVpwgZmKEJ+fCCkHfqGYGi0qnuiq6LmQ76JioX+vpdfbcpdA==";
-        _ = fakeTokenUtensil
-            .GenerateToken(agentCode, agentKey, secretKey)
-            .Returns(token);
-
-        var builder = new UriBuilder(new Uri(apiUrl, "/b2b//report/all-wagers"))
-        {
-            Port = -1
-        };
-        var query = HttpUtility.ParseQueryString(builder.Query);
-        query["dateFrom"] = dateFrom.DatetimeConvertToString();
-        query["dateTo"] = dateTo.DatetimeConvertToString();
-        query["filterBy"] = "update_date";
-        builder.Query = query.ToString();
-        string url = builder.ToString();
-
-        var content = "[{\"wagerId\":50261806,\"eventId\":0,\"eventName\":null,\"parentEventName\":null,\"headToHead\":null,\"wagerDateFm\":\"2023-05-24 21:40:41\",\"eventDateFm\":\"2023-05-24 21:40:41\",\"settleDateFm\":\"2023-05-24 22:12:13\",\"status\":\"SETTLED\",\"homeTeam\":null,\"awayTeam\":null,\"selection\":null,\"handicap\":0.0,\"odds\":29.534,\"oddsFormat\":2,\"betType\":6,\"league\":null,\"leagueId\":0,\"stake\":1.0,\"sportId\":0,\"sport\":null,\"currencyCode\":\"CNY\",\"inplayScore\":\"0\",\"inPlay\":false,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"cancellationStatus\":null,\"parlaySelections\":[{\"selection\":\"Akiko Omae (Games)\",\"eventDateFm\":\"2023-05-24 20:30:00\",\"scores\":[{\"period\":1,\"score\":\"6-2\"},{\"period\":0,\"score\":\"12-5\"}],\"sportId\":33,\"sport\":\"Tennis\",\"league\":\"ITF Women Karuizawa - R1\",\"homeTeam\":\"Akiko Omae (Games)\",\"awayTeam\":\"Olivia Lincer (Games)\",\"betType\":2,\"leagueId\":8617,\"eventId\":1573836610,\"wagerId\":50261806,\"selectionType\":0,\"inplayScore\":null,\"inPlay\":true,\"odds\":1.56,\"handicap\":-7.5,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"legStatus\":\"LOSE\",\"eventName\":\"Akiko Omae (Games)-vs-Olivia Lincer (Games)\",\"point\":0,\"type\":\"\",\"teaserHDPPoint\":null,\"legId\":\"500b0827-2a1d-88c2-8cc8-bbacf2eae146\"},{\"selection\":\"Funa Kozaki (Sets)\",\"eventDateFm\":\"2023-05-24 20:30:00\",\"scores\":[],\"sportId\":33,\"sport\":\"Tennis\",\"league\":\"ITF Women Karuizawa - R1\",\"homeTeam\":\"Funa Kozaki (Sets)\",\"awayTeam\":\"Nana Kawagishi (Sets)\",\"betType\":1,\"leagueId\":8617,\"eventId\":1573836988,\"wagerId\":50261806,\"selectionType\":0,\"inplayScore\":null,\"inPlay\":true,\"odds\":5.79,\"handicap\":null,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"legStatus\":\"ACCEPTED\",\"eventName\":\"Funa Kozaki (Sets)-vs-Nana Kawagishi (Sets)\",\"point\":0,\"type\":\"\",\"teaserHDPPoint\":null,\"legId\":\"92750cc8-6393-d39c-6786-c24980cc1440\"},{\"selection\":\"Risa Ushijima (Games)\",\"eventDateFm\":\"2023-05-24 20:30:00\",\"scores\":[],\"sportId\":33,\"sport\":\"Tennis\",\"league\":\"ITF Women Karuizawa - R1\",\"homeTeam\":\"Risa Ushijima (Games)\",\"awayTeam\":\"Johanne Christine Svendsen (Games)\",\"betType\":2,\"leagueId\":8617,\"eventId\":1573836608,\"wagerId\":50261806,\"selectionType\":0,\"inplayScore\":null,\"inPlay\":true,\"odds\":1.06,\"handicap\":-2.5,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"legStatus\":\"ACCEPTED\",\"eventName\":\"Risa Ushijima (Games)-vs-Johanne Christine Svendsen (Games)\",\"point\":0,\"type\":\"\",\"teaserHDPPoint\":null,\"legId\":\"c7b82488-b234-0f7c-6038-c9ebd3afb95d\"}],\"category\":null,\"toWin\":29.53,\"toRisk\":1.0,\"product\":\"SB\",\"isResettle\":false,\"parlayMixOdds\":29.534,\"wagerType\":\"parlay\",\"competitors\":[],\"userCode\":\"V020100002\",\"loginId\":\"4ugz7klo94oa\",\"winLoss\":-1.0,\"turnover\":1.0,\"scores\":[],\"result\":\"LOSE\",\"masterWagerId\":50261806,\"wagerNum\":1,\"volume\":1.0,\"view\":\"D-Compact\"}]";
-
-        var handler = new MockHttpMessageHandler();
-        _ = handler.Expect(HttpMethod.Get, url)
-                .WithHeaders("userCode", agentCode)
-                .WithHeaders("token", token)
-                .Respond(HttpStatusCode.OK, new StringContent(content));
-
-        var fakeLog = NullLogger<GameApiClient>.Instance;
-        var fakeHttpClient = handler.ToHttpClient();
-
-        var client = new GameApiClient(
-            fakeLog,
-            fakeTokenUtensil,
-            fakeHttpClient);
-
-        var actual = await client
-            .WagersAsync(
-                apiUrl: new Uri("https://paapistg.oreo88.com"),
-                agentCode: agentCode,
-                agentKey: agentKey,
-                secretKey: secretKey,
-                dateFrom: dateFrom,
-                dateTo: dateTo)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
-
-        Assert.NotNull(actual);
-        Assert.True(actual.Any());
-        Assert.Equal(50261806, actual.Single().WagerId);
-        Assert.Equal(string.Empty, actual.Single().Sport);
-        Assert.Equal(0, actual.Single().SportId);
-        Assert.Equal("4ugz7klo94oa", actual.Single().LoginId);
-        Assert.Equal(WagerStatus.SETTLED, actual.Single().Status);
-        Assert.Equal(DateTimeOffset.Parse("2023-05-24T21:40:41-04:00"), actual.Single().WagerDateFm);
-        Assert.Equal(DateTimeOffset.Parse("2023-05-24T22:12:13-04:00"), actual.Single().SettleDateFm);
-        Assert.Equal(1m, actual.Single().Stake);
-        Assert.Equal(1m, actual.Single().Turnover);
-        Assert.Equal(-1m, actual.Single().WinLoss);
     }
 }
