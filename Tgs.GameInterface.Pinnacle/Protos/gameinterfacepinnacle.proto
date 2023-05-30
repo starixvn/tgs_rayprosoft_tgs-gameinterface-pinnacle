@@ -18,7 +18,6 @@ service GameInterfacePinnacle {
   rpc FundStatus(FundStatusRequest) returns (BaseReply);
   rpc GameUrl (GameUrlRequest) returns (GameUrlReply);
   rpc GameRecord (GameRecordRequest) returns (GameRecordReply);
-  rpc GameRecordHistory (GameRecordRequest) returns (GameRecordReply);
   rpc CheckingService(CheckingServiceRequest) returns (CheckingServiceReply);
 }
 
