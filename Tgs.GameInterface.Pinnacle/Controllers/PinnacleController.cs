@@ -274,7 +274,9 @@ namespace Tgs.GameInterface.Pinnacle.Controllers
 
             return new PlayerBalanceResultViewModel(
                 result.IsPlayerExist,
-                result.Balance);
+                result.Balance,
+                result.FreeBalance,
+                result.OutstandingBalance);
         }
 
         /// <summary>
