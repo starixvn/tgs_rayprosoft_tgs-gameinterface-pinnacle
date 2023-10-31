@@ -35,7 +35,7 @@ public class LogoutUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.Unauthorized, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -46,16 +46,14 @@ public class LogoutUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        _ = await Assert
-             .ThrowsAsync<HttpRequestException>(() => client
-                 .LogoutAsync(
-                     apiUrl: new Uri("https://paapistg.oreo88.com"),
-                     agentCode: agentCode,
-                     agentKey: agentKey,
-                     secretKey: secretKey,
-                     userCode: userCode)
-                  .AsTask())
-              .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<HttpRequestException>(
+            () => client.LogoutAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode)
+            .AsTask());
     }
 
     [Fact]
@@ -86,7 +84,7 @@ public class LogoutUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -97,14 +95,12 @@ public class LogoutUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        await client
-           .LogoutAsync(
-               apiUrl: apiUrl,
-               agentCode: agentCode,
-               agentKey: agentKey,
-               secretKey: secretKey,
-               userCode: userCode)
-           .ConfigureAwait(false);
+        await client.LogoutAsync(
+            apiUrl: apiUrl,
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            userCode: userCode);
     }
 
     [Fact]
@@ -135,7 +131,7 @@ public class LogoutUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -146,13 +142,11 @@ public class LogoutUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        await client
-            .LogoutAsync(
-              apiUrl: apiUrl,
-              agentCode: agentCode,
-              agentKey: agentKey,
-              secretKey: secretKey,
-              userCode: userCode)
-            .ConfigureAwait(false);
+        await client.LogoutAsync(
+            apiUrl: apiUrl,
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            userCode: userCode);
     }
 }

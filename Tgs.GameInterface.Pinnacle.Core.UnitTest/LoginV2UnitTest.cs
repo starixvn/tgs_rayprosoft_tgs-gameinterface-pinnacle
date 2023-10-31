@@ -37,7 +37,7 @@ public class LoginV2UnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.Unauthorized, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -48,17 +48,15 @@ public class LoginV2UnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        _ = await Assert
-             .ThrowsAsync<HttpRequestException>(() => client
-                 .LoginV2Async(
-                     apiUrl: new Uri("https://paapistg.oreo88.com"),
-                     agentCode: agentCode,
-                     agentKey: agentKey,
-                     secretKey: secretKey,
-                     userCode: userCode,
-                     locale: locale)
-                  .AsTask())
-              .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<HttpRequestException>(
+            () => client.LoginV2Async(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode,
+                locale: locale)
+            .AsTask());
     }
 
     [Fact]
@@ -91,7 +89,7 @@ public class LoginV2UnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -102,15 +100,13 @@ public class LoginV2UnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-            .LoginV2Async(
-                apiUrl: apiUrl,
-                agentCode: agentCode,
-                agentKey: agentKey,
-                secretKey: secretKey,
-                userCode: userCode,
-                locale: locale)
-            .ConfigureAwait(false);
+        var actual = await client.LoginV2Async(
+            apiUrl: apiUrl,
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            userCode: userCode,
+            locale: locale);
 
         Assert.NotNull(actual);
         Assert.Equal("https://pmrqhaa.oreo88.com/member-service/v1/login-token?locale=zh-cn&sport=&oddsFormat=HK&target=LIVE&token=K0hWcWI2d2p5SEtpdjY1UUxIWlZlUUtLNzdaM21BKytCK2tTbnRxa2ZyV002Y2wvZzdqZnA4dDRpN01GTzVETWU2ekJranRwUTBHcUhwOUQ5ajhBSUE9PQ==", actual);

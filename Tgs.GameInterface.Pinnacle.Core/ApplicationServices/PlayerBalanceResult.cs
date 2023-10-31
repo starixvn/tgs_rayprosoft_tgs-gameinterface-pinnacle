@@ -6,5 +6,4 @@ public record PlayerBalanceResult
     public decimal Balance => FreeBalance + OutstandingBalance;
     public decimal FreeBalance { get; init; } = 0;
     public decimal OutstandingBalance { get; init; } = 0;
-
 }

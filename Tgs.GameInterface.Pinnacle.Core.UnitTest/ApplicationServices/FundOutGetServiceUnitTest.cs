@@ -22,25 +22,21 @@ public class FundOutGetServiceUnitTest
 
         var result = new DepositResult(
             Res: "{\"amount\":1,\"loginId\":\"4ucmqplxb029\",\"userCode\":\"V020100001\",\"availableBalance\":0.00}");
-        _ = fakeGameApiClient
-             .DepositAsync(
-                 Arg.Is(query.ApiUrl),
-                 Arg.Is(query.AgentCode),
-                 Arg.Is(query.AgentKey),
-                 Arg.Is(query.SecretKey),
-                 Arg.Is(query.PlayerCode),
-                 Arg.Is(query.TransactionId),
-                 Arg.Is(query.Amount),
-                 Arg.Any<CancellationToken>())
-             .Returns(result);
+        _ = fakeGameApiClient.DepositAsync(
+            Arg.Is(query.ApiUrl),
+            Arg.Is(query.AgentCode),
+            Arg.Is(query.AgentKey),
+            Arg.Is(query.SecretKey),
+            Arg.Is(query.PlayerCode),
+            Arg.Is(query.TransactionId),
+            Arg.Is(query.Amount),
+            Arg.Any<CancellationToken>())
+            .Returns(result);
 
         var client = new FundOutGetService(
             fakeGameApiClient);
 
-        var actual = await client
-            .GetAsync(
-               query)
-           .ConfigureAwait(false);
+        var actual = await client.GetAsync(query);
 
         Assert.NotNull(actual);
         Assert.Equal(result.Res, actual.Res);

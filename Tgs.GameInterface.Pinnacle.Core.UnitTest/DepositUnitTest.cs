@@ -40,7 +40,7 @@ public class DepositUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.Unauthorized, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -51,18 +51,16 @@ public class DepositUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        _ = await Assert
-             .ThrowsAsync<HttpRequestException>(() => client
-                 .DepositAsync(
-                     apiUrl: new Uri("https://paapistg.oreo88.com"),
-                     agentCode: agentCode,
-                     agentKey: agentKey,
-                     secretKey: secretKey,
-                     userCode: userCode,
-                     transactionId: transactionId,
-                     amount: amount)
-                  .AsTask())
-              .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<HttpRequestException>(
+            () => client.DepositAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode,
+                transactionId: transactionId,
+                amount: amount)
+            .AsTask());
     }
 
     [Fact]
@@ -97,7 +95,7 @@ public class DepositUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -108,16 +106,14 @@ public class DepositUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-          .DepositAsync(
+        var actual = await client.DepositAsync(
             apiUrl: apiUrl,
             agentCode: agentCode,
             agentKey: agentKey,
             secretKey: secretKey,
             userCode: userCode,
             transactionId: transactionId,
-            amount: amount)
-          .ConfigureAwait(false);
+            amount: amount);
 
         Assert.NotNull(actual);
         Assert.Equal(content, actual.Res);
@@ -155,7 +151,7 @@ public class DepositUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -167,16 +163,15 @@ public class DepositUnitTest
             fakeHttpClient);
 
         _ = await Assert
-             .ThrowsAsync<GameInterfaceException>(() => client
-                .DepositAsync(
-                    apiUrl: apiUrl,
-                    agentCode: agentCode,
-                    agentKey: agentKey,
-                    secretKey: secretKey,
-                    userCode: userCode,
-                    transactionId: transactionId,
-                    amount: amount)
-                .AsTask())
-              .ConfigureAwait(false);
+             .ThrowsAsync<GameInterfaceException>(
+            () => client.DepositAsync(
+                apiUrl: apiUrl,
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode,
+                transactionId: transactionId,
+                amount: amount)
+            .AsTask());
     }
 }

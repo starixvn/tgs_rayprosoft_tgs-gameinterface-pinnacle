@@ -35,7 +35,7 @@ public class DepositWithdrawStatusUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -46,14 +46,12 @@ public class DepositWithdrawStatusUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-          .DepositWithdrawStatusAsync(
+        var actual = await client.DepositWithdrawStatusAsync(
             apiUrl: apiUrl,
             agentCode: agentCode,
             agentKey: agentKey,
             secretKey: secretKey,
-            transactionId: transactionId)
-          .ConfigureAwait(false);
+            transactionId: transactionId);
 
         Assert.False(actual);
     }
@@ -86,7 +84,7 @@ public class DepositWithdrawStatusUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -97,14 +95,12 @@ public class DepositWithdrawStatusUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-          .DepositWithdrawStatusAsync(
+        var actual = await client.DepositWithdrawStatusAsync(
             apiUrl: apiUrl,
             agentCode: agentCode,
             agentKey: agentKey,
             secretKey: secretKey,
-            transactionId: transactionId)
-          .ConfigureAwait(false);
+            transactionId: transactionId);
 
         Assert.False(actual);
     }
@@ -137,7 +133,7 @@ public class DepositWithdrawStatusUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -148,14 +144,12 @@ public class DepositWithdrawStatusUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-          .DepositWithdrawStatusAsync(
+        var actual = await client.DepositWithdrawStatusAsync(
             apiUrl: apiUrl,
             agentCode: agentCode,
             agentKey: agentKey,
             secretKey: secretKey,
-            transactionId: transactionId)
-          .ConfigureAwait(false);
+            transactionId: transactionId);
 
         Assert.True(actual);
     }

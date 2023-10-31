@@ -55,17 +55,16 @@ public class WagersUnitTest
             fakeHttpClient);
 
         _ = await Assert
-             .ThrowsAsync<HttpRequestException>(() => client
-                 .WagersAsync(
-                     apiUrl: new Uri("https://paapistg.oreo88.com"),
-                     agentCode: agentCode,
-                     agentKey: agentKey,
-                     secretKey: secretKey,
-                     dateFrom: dateFrom,
-                     dateTo: dateTo)
-                 .ToArrayAsync()
-                 .AsTask())
-              .ConfigureAwait(false);
+             .ThrowsAsync<HttpRequestException>(
+            () => client.WagersAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                dateFrom: dateFrom,
+                dateTo: dateTo)
+            .ToArrayAsync()
+            .AsTask());
     }
 
     [Fact]
@@ -112,19 +111,16 @@ public class WagersUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        _ = await Assert
-            .ThrowsAsync<GameInterfaceException>(()
-                => client
-                .WagersAsync(
-                    apiUrl: new Uri("https://paapistg.oreo88.com"),
-                    agentCode: agentCode,
-                    agentKey: agentKey,
-                    secretKey: secretKey,
-                    dateFrom: dateFrom,
-                    dateTo: dateTo)
-                .ToArrayAsync()
-                .AsTask())
-            .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<GameInterfaceException>(
+            () => client.WagersAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                dateFrom: dateFrom,
+                dateTo: dateTo)
+            .ToArrayAsync()
+            .AsTask());
     }
 
     [Fact]
@@ -179,8 +175,7 @@ public class WagersUnitTest
                 secretKey: secretKey,
                 dateFrom: dateFrom,
                 dateTo: dateTo)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            .ToArrayAsync();
 
         Assert.NotNull(actual);
         Assert.False(actual.Any());
@@ -232,14 +227,13 @@ public class WagersUnitTest
 
         var actual = await client
             .WagersAsync(
-                apiUrl: new Uri("https://paapistg.oreo88.com"),
-                agentCode: agentCode,
-                agentKey: agentKey,
-                secretKey: secretKey,
-                dateFrom: dateFrom,
-                dateTo: dateTo)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            apiUrl: new Uri("https://paapistg.oreo88.com"),
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            dateFrom: dateFrom,
+            dateTo: dateTo)
+            .ToArrayAsync();
 
         Assert.NotNull(actual);
         Assert.True(actual.Any());
@@ -301,14 +295,13 @@ public class WagersUnitTest
 
         var actual = await client
             .WagersAsync(
-                apiUrl: new Uri("https://paapistg.oreo88.com"),
-                agentCode: agentCode,
-                agentKey: agentKey,
-                secretKey: secretKey,
-                dateFrom: dateFrom,
-                dateTo: dateTo)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            apiUrl: new Uri("https://paapistg.oreo88.com"),
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            dateFrom: dateFrom,
+            dateTo: dateTo)
+            .ToArrayAsync();
 
         Assert.NotNull(actual);
         Assert.True(actual.Any());
@@ -370,14 +363,13 @@ public class WagersUnitTest
 
         var actual = await client
             .WagersAsync(
-                apiUrl: new Uri("https://paapistg.oreo88.com"),
-                agentCode: agentCode,
-                agentKey: agentKey,
-                secretKey: secretKey,
-                dateFrom: dateFrom,
-                dateTo: dateTo)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            apiUrl: new Uri("https://paapistg.oreo88.com"),
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            dateFrom: dateFrom,
+            dateTo: dateTo)
+            .ToArrayAsync();
 
         Assert.NotNull(actual);
         Assert.True(actual.Any());
@@ -439,14 +431,13 @@ public class WagersUnitTest
 
         var actual = await client
             .WagersAsync(
-                apiUrl: new Uri("https://paapistg.oreo88.com"),
-                agentCode: agentCode,
-                agentKey: agentKey,
-                secretKey: secretKey,
-                dateFrom: dateFrom,
-                dateTo: dateTo)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+            apiUrl: new Uri("https://paapistg.oreo88.com"),
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            dateFrom: dateFrom,
+            dateTo: dateTo)
+            .ToArrayAsync();
 
         Assert.NotNull(actual);
         Assert.True(actual.Any());
@@ -506,16 +497,14 @@ public class WagersUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-            .WagersAsync(
-                apiUrl: new Uri("https://paapistg.oreo88.com"),
-                agentCode: agentCode,
-                agentKey: agentKey,
-                secretKey: secretKey,
-                dateFrom: dateFrom,
-                dateTo: dateTo)
-            .ToArrayAsync()
-            .ConfigureAwait(false);
+        var actual = await client.WagersAsync(
+            apiUrl: new Uri("https://paapistg.oreo88.com"),
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            dateFrom: dateFrom,
+            dateTo: dateTo)
+            .ToArrayAsync();
 
         Assert.NotNull(actual);
         Assert.True(actual.Any());

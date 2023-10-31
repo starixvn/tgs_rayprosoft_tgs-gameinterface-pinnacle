@@ -20,20 +20,16 @@ public class PlayerCreateCommandServiceUnitTest
         var client = new PlayerCreateCommandService(
             fakeGameApiClient);
 
-        await client
-           .ExecuteAsync(
-              command)
-          .ConfigureAwait(false);
+        await client.ExecuteAsync(command);
 
         await fakeGameApiClient
            .Received(1)
            .CreateAsync(
-               apiUrl: Arg.Is(command.ApiUrl),
-               agentCode: Arg.Is(command.AgentCode),
-               agentKey: Arg.Is(command.AgentKey),
-               secretKey: Arg.Is(command.SecretKey),
-               userCode: Arg.Is(command.PlayerCode),
-               cancellationToken: Arg.Any<CancellationToken>())
-           .ConfigureAwait(false);
+            apiUrl: Arg.Is(command.ApiUrl),
+            agentCode: Arg.Is(command.AgentCode),
+            agentKey: Arg.Is(command.AgentKey),
+            secretKey: Arg.Is(command.SecretKey),
+            userCode: Arg.Is(command.PlayerCode),
+            cancellationToken: Arg.Any<CancellationToken>());
     }
 }

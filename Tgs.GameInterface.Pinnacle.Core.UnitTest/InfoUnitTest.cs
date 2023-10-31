@@ -49,16 +49,14 @@ public class InfoUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        _ = await Assert
-             .ThrowsAsync<HttpRequestException>(() => client
-                 .InfoAsync(
-                     apiUrl: apiUrl,
-                     agentCode: agentCode,
-                     agentKey: agentKey,
-                     secretKey: secretKey,
-                     userCode: userCode)
-                  .AsTask())
-              .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<HttpRequestException>
+            (() => client.InfoAsync(
+                apiUrl: apiUrl,
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode)
+            .AsTask());
     }
 
     [Fact]
@@ -102,14 +100,12 @@ public class InfoUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-            .InfoAsync(
-              apiUrl: apiUrl,
-              agentCode: agentCode,
-              agentKey: agentKey,
-              secretKey: secretKey,
-              userCode: userCode)
-            .ConfigureAwait(false);
+        var actual = await client.InfoAsync(
+            apiUrl: apiUrl,
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            userCode: userCode);
 
         Assert.NotNull(actual);
         Assert.True(actual.IsPlayerExist);
@@ -158,14 +154,12 @@ public class InfoUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        var actual = await client
-            .InfoAsync(
-              apiUrl: apiUrl,
-              agentCode: agentCode,
-              agentKey: agentKey,
-              secretKey: secretKey,
-              userCode: userCode)
-            .ConfigureAwait(false);
+        var actual = await client.InfoAsync(
+            apiUrl: apiUrl,
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            userCode: userCode);
 
         Assert.NotNull(actual);
         Assert.False(actual.IsPlayerExist);

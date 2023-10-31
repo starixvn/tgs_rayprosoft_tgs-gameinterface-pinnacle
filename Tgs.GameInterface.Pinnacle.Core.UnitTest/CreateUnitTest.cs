@@ -36,7 +36,7 @@ public class CreateUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.Unauthorized, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -47,16 +47,14 @@ public class CreateUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        _ = await Assert
-             .ThrowsAsync<HttpRequestException>(() => client
-                 .CreateAsync(
-                     apiUrl: new Uri("https://paapistg.oreo88.com"),
-                     agentCode: agentCode,
-                     agentKey: agentKey,
-                     secretKey: secretKey,
-                     userCode: userCode)
-                  .AsTask())
-              .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<HttpRequestException>(
+            () => client.CreateAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode)
+            .AsTask());
     }
 
     [Fact]
@@ -88,7 +86,7 @@ public class CreateUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -99,14 +97,12 @@ public class CreateUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        await client
-         .CreateAsync(
-           apiUrl: apiUrl,
-           agentCode: agentCode,
-           agentKey: agentKey,
-           secretKey: secretKey,
-           userCode: userCode)
-         .ConfigureAwait(false);
+        await client.CreateAsync(
+            apiUrl: apiUrl,
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            userCode: userCode);
     }
 
     [Fact]
@@ -138,7 +134,7 @@ public class CreateUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -149,13 +145,11 @@ public class CreateUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        await client
-         .CreateAsync(
-           apiUrl: apiUrl,
-           agentCode: agentCode,
-           agentKey: agentKey,
-           secretKey: secretKey,
-           userCode: userCode)
-         .ConfigureAwait(false);
+        await client.CreateAsync(
+            apiUrl: apiUrl,
+            agentCode: agentCode,
+            agentKey: agentKey,
+            secretKey: secretKey,
+            userCode: userCode);
     }
 }

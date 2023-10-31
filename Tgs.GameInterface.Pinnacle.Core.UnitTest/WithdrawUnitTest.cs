@@ -40,7 +40,7 @@ public class WithdrawUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.Unauthorized, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -52,17 +52,16 @@ public class WithdrawUnitTest
             fakeHttpClient);
 
         _ = await Assert
-             .ThrowsAsync<HttpRequestException>(() => client
-                 .WithdrawAsync(
-                     apiUrl: new Uri("https://paapistg.oreo88.com"),
-                     agentCode: agentCode,
-                     agentKey: agentKey,
-                     secretKey: secretKey,
-                     userCode: userCode,
-                     transactionId: transactionId,
-                     amount: amount)
-                  .AsTask())
-              .ConfigureAwait(false);
+             .ThrowsAsync<HttpRequestException>(
+            () => client.WithdrawAsync(
+                apiUrl: new Uri("https://paapistg.oreo88.com"),
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode,
+                transactionId: transactionId,
+                amount: amount)
+            .AsTask());
     }
 
     [Fact]
@@ -97,7 +96,7 @@ public class WithdrawUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -109,15 +108,14 @@ public class WithdrawUnitTest
             fakeHttpClient);
 
         var actual = await client
-          .WithdrawAsync(
+            .WithdrawAsync(
             apiUrl: apiUrl,
             agentCode: agentCode,
             agentKey: agentKey,
             secretKey: secretKey,
             userCode: userCode,
             transactionId: transactionId,
-            amount: amount)
-          .ConfigureAwait(false);
+            amount: amount);
 
         Assert.NotNull(actual);
         Assert.Equal(content, actual.Res);
@@ -155,7 +153,7 @@ public class WithdrawUnitTest
                 .WithHeaders("userCode", agentCode)
                 .WithHeaders("token", token)
                 .WithHeaders("Content-Type", "application/x-www-form-urlencoded")
-                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync().ConfigureAwait(false))
+                .WithContent(await new FormUrlEncodedContent(parameters).ReadAsStringAsync())
                 .Respond(HttpStatusCode.OK, new StringContent(content));
 
         var fakeLog = NullLogger<GameApiClient>.Instance;
@@ -166,17 +164,15 @@ public class WithdrawUnitTest
             fakeTokenUtensil,
             fakeHttpClient);
 
-        _ = await Assert
-             .ThrowsAsync<GameInterfaceException>(() => client
-                .WithdrawAsync(
-                    apiUrl: apiUrl,
-                    agentCode: agentCode,
-                    agentKey: agentKey,
-                    secretKey: secretKey,
-                    userCode: userCode,
-                    transactionId: transactionId,
-                    amount: amount)
-                .AsTask())
-              .ConfigureAwait(false);
+        _ = await Assert.ThrowsAsync<GameInterfaceException>(
+            () => client.WithdrawAsync(
+                apiUrl: apiUrl,
+                agentCode: agentCode,
+                agentKey: agentKey,
+                secretKey: secretKey,
+                userCode: userCode,
+                transactionId: transactionId,
+                amount: amount)
+            .AsTask());
     }
 }

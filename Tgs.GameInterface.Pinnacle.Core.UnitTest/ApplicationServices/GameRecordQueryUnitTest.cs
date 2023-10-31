@@ -22,25 +22,22 @@ public class GameRecordQueryUnitTest
         var client = new GameRecordQueryService(
             fakeGameApiClient);
 
-        _ = await client
-            .QueryAsync(
-               query)
+        _ = await client.QueryAsync(
+            query)
             .ToArrayAsync()
-            .ConfigureAwait(false)
             ?? Enumerable.Empty<GameRecordResult>();
 
         _ = await fakeGameApiClient
             .Received(1)
             .WagersAsync(
-                 apiUrl: Arg.Is(query.ApiUrl),
-                 agentCode: Arg.Is(query.AgentCode),
-                 agentKey: Arg.Is(query.AgentKey),
-                 secretKey: Arg.Is(query.SecretKey),
-                 dateFrom: Arg.Is(query.StartTime),
-                 dateTo: Arg.Is(query.EndTime),
-                 cancellationToken: Arg.Any<CancellationToken>())
+            apiUrl: Arg.Is(query.ApiUrl),
+            agentCode: Arg.Is(query.AgentCode),
+            agentKey: Arg.Is(query.AgentKey),
+            secretKey: Arg.Is(query.SecretKey),
+            dateFrom: Arg.Is(query.StartTime),
+            dateTo: Arg.Is(query.EndTime),
+            cancellationToken: Arg.Any<CancellationToken>())
             .ToArrayAsync()
-            .ConfigureAwait(false)
             ?? Enumerable.Empty<WagerResult>();
     }
 
@@ -85,11 +82,9 @@ public class GameRecordQueryUnitTest
         var client = new GameRecordQueryService(
             fakeGameApiClient);
 
-        var actual = await client
-            .QueryAsync(
-               query)
+        var actual = await client.QueryAsync(
+            query)
             .ToArrayAsync()
-            .ConfigureAwait(false)
             ?? Enumerable.Empty<GameRecordResult>();
 
         Assert.NotNull(actual);
@@ -150,11 +145,9 @@ public class GameRecordQueryUnitTest
         var client = new GameRecordQueryService(
             fakeGameApiClient);
 
-        var actual = await client
-            .QueryAsync(
-               query)
+        var actual = await client.QueryAsync(
+            query)
             .ToArrayAsync()
-            .ConfigureAwait(false)
             ?? Enumerable.Empty<GameRecordResult>();
 
         Assert.NotNull(actual);
@@ -215,11 +208,9 @@ public class GameRecordQueryUnitTest
         var client = new GameRecordQueryService(
             fakeGameApiClient);
 
-        var actual = await client
-            .QueryAsync(
-               query)
+        var actual = await client.QueryAsync(
+            query)
             .ToArrayAsync()
-            .ConfigureAwait(false)
             ?? Enumerable.Empty<GameRecordResult>();
 
         Assert.NotNull(actual);
@@ -280,11 +271,9 @@ public class GameRecordQueryUnitTest
         var client = new GameRecordQueryService(
             fakeGameApiClient);
 
-        var actual = await client
-            .QueryAsync(
-               query)
+        var actual = await client.QueryAsync(
+            query)
             .ToArrayAsync()
-            .ConfigureAwait(false)
             ?? Enumerable.Empty<GameRecordResult>();
 
         Assert.NotNull(actual);
