@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Web;
@@ -406,13 +407,13 @@ internal class GameApiClient : IGameApiClient
         {
             Port = -1
         };
-        var query = HttpUtility.ParseQueryString(builder.Query);
+        var query = HttpUtility.ParseQueryString(builder.Query, Encoding.UTF8);
         foreach (var parameter in parameters)
         {
             query[parameter.Key] = parameter.Value;
         }
         builder.Query = query.ToString();
-        string url = builder.ToString();
+        var url = new Uri(builder.Uri, HttpUtility.UrlDecode(builder.Query));
         var sw = Stopwatch.StartNew();
 
         var httpResponseMessage = await _client.GetAsync(url, cancellationToken);
@@ -448,7 +449,7 @@ internal class GameApiClient : IGameApiClient
     }
 
     private async ValueTask<JsonNode> PostAsync(
-            Uri apiUrl,
+        Uri apiUrl,
         IDictionary<string, string> parameters,
         IDictionary<string, string> headers,
         string logPrefix,
