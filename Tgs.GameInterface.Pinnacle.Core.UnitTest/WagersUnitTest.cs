@@ -179,7 +179,7 @@ public class WagersUnitTest
             .ToArrayAsync();
 
         Assert.NotNull(actual);
-        Assert.False(actual.Any());
+        Assert.Empty(actual);
     }
 
     [Fact]
@@ -237,7 +237,7 @@ public class WagersUnitTest
             .ToArrayAsync();
 
         Assert.NotNull(actual);
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(50260945, actual.Single().WagerId);
         Assert.Equal("Soccer", actual.Single().Sport);
         Assert.Equal(29, actual.Single().SportId);
@@ -305,7 +305,7 @@ public class WagersUnitTest
             .ToArrayAsync();
 
         Assert.NotNull(actual);
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(50261806, actual.Single().WagerId);
         Assert.Equal(string.Empty, actual.Single().Sport);
         Assert.Equal(0, actual.Single().SportId);
@@ -373,7 +373,7 @@ public class WagersUnitTest
             .ToArrayAsync();
 
         Assert.NotNull(actual);
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(50257869, actual.Single().WagerId);
         Assert.Equal("Soccer", actual.Single().Sport);
         Assert.Equal(29, actual.Single().SportId);
@@ -441,7 +441,7 @@ public class WagersUnitTest
             .ToArrayAsync();
 
         Assert.NotNull(actual);
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(50257869, actual.Single().WagerId);
         Assert.Equal("Soccer", actual.Single().Sport);
         Assert.Equal(29, actual.Single().SportId);
@@ -508,7 +508,7 @@ public class WagersUnitTest
             .ToArrayAsync();
 
         Assert.NotNull(actual);
-        Assert.True(actual.Any());
+        Assert.NotEmpty(actual);
         Assert.Equal(50260945, actual.Single().WagerId);
         Assert.Equal("Soccer", actual.Single().Sport);
         Assert.Equal(29, actual.Single().SportId);

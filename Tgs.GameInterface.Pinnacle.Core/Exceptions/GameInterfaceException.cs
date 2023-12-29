@@ -1,11 +1,7 @@
 ﻿namespace Tgs.GameInterface.Pinnacle.Core.Exceptions;
 
-public class GameInterfaceException : Exception
+public class GameInterfaceException(string code) : Exception($"{GetMessage(code)}({code})")
 {
-    public GameInterfaceException(string code) : base($"{GetMessage(code)}({code})")
-    {
-    }
-
     private static string GetMessage(string code)
         => code switch
         {

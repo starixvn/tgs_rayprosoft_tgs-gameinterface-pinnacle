@@ -4,20 +4,14 @@ using Tgs.ServiceUtility;
 
 namespace Tgs.GameInterface.Pinnacle.Core.ApplicationServices;
 
-internal class GameRecordQueryService : IQueryService<GameRecordQuery, GameRecordResult>
+internal class GameRecordQueryService(
+    IGameApiClient client) : IQueryService<GameRecordQuery, GameRecordResult>
 {
-    private readonly IGameApiClient _client;
-
-    public GameRecordQueryService(IGameApiClient client)
-    {
-        _client = client ?? throw new ArgumentNullException(nameof(client));
-    }
-
     public async IAsyncEnumerable<GameRecordResult> QueryAsync(
         GameRecordQuery query,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var results = await _client
+        var results = await client
             .WagersAsync(
                 apiUrl: query.ApiUrl,
                 agentCode: query.AgentCode,

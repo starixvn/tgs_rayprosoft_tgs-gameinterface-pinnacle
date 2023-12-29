@@ -4,15 +4,9 @@ using Tgs.GameInterface.Pinnacle.Protos;
 
 namespace Tgs.GameInterface.Pinnacle.Client;
 
-internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
+internal class GameInterfacePinnacleClient(
+    GameInterfacePinnacle.GameInterfacePinnacleClient client) : IGameInterfacePinnacleClient
 {
-    private readonly GameInterfacePinnacle.GameInterfacePinnacleClient _client;
-
-    public GameInterfacePinnacleClient(GameInterfacePinnacle.GameInterfacePinnacleClient client)
-    {
-        _client = client ?? throw new ArgumentNullException(nameof(client));
-    }
-
     public async ValueTask<string> CheckingServiceAsync(
         string machineName,
         CancellationToken cancellationToken = default)
@@ -22,7 +16,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
             MachineName = machineName,
         };
 
-        var reply = await _client
+        var reply = await client
             .CheckingServiceAsync(
                 request: request,
                 cancellationToken: cancellationToken)
@@ -40,7 +34,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         string transactionId,
         decimal amount,
         CancellationToken cancellationToken = default)
-        => await _client
+        => await client
         .FundInAsync(
             request: new FundRequest
             {
@@ -64,7 +58,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         string transactionId,
         decimal amount,
         CancellationToken cancellationToken = default)
-        => await _client
+        => await client
         .FundOutAsync(
             request: new FundRequest
             {
@@ -87,7 +81,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         string transactionId,
         CancellationToken cancellationToken = default)
     {
-        var reply = await _client
+        var reply = await client
         .FundStatusAsync(
             request: new FundStatusRequest
             {
@@ -112,7 +106,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         DateTimeOffset endTime,
        [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        var reply = await _client
+        var reply = await client
         .GameRecordAsync(
             request: new GameRecordRequest
             {
@@ -149,7 +143,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         string locale,
         CancellationToken cancellationToken = default)
     {
-        var reply = await _client
+        var reply = await client
         .GameUrlAsync(
             request: new GameUrlRequest
             {
@@ -173,7 +167,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         string secretKey,
         string playerCode,
         CancellationToken cancellationToken = default)
-        => await _client
+        => await client
         .PlayerBalanceAsync(
             request: new PlayerBalanceRequest
             {
@@ -193,7 +187,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         string secretKey,
         string playerCode,
         CancellationToken cancellationToken = default)
-        => _ = await _client
+        => _ = await client
         .PlayerCreateAsync(
             request: new PlayerCreateRequest
             {
@@ -213,7 +207,7 @@ internal class GameInterfacePinnacleClient : IGameInterfacePinnacleClient
         string secretKey,
         string playerCode,
         CancellationToken cancellationToken = default)
-        => _ = await _client
+        => _ = await client
         .PlayerLogoutAsync(
             request: new PlayerLogoutRequest
             {

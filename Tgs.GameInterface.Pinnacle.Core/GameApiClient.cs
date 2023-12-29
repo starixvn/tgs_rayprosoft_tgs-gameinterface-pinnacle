@@ -11,22 +11,11 @@ using Tgs.GameInterface.Pinnacle.Core.Models;
 
 namespace Tgs.GameInterface.Pinnacle.Core;
 
-internal class GameApiClient : IGameApiClient
+internal class GameApiClient(
+    ILogger<GameApiClient> logger,
+    ITokenUtensil tokenUtensil,
+    HttpClient client) : IGameApiClient
 {
-    private readonly HttpClient _client;
-    private readonly ILogger<GameApiClient> _logger;
-    private readonly ITokenUtensil _tokenUtensil;
-
-    public GameApiClient(
-        ILogger<GameApiClient> logger,
-        ITokenUtensil tokenUtensil,
-        HttpClient client)
-    {
-        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-        _tokenUtensil = tokenUtensil ?? throw new ArgumentNullException(nameof(tokenUtensil));
-        _client = client ?? throw new ArgumentNullException(nameof(client));
-    }
-
     public async ValueTask CreateAsync(
         Uri apiUrl,
         string agentCode,
@@ -42,7 +31,7 @@ internal class GameApiClient : IGameApiClient
             { "loginId", userCode }
         };
 
-        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var token = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -86,7 +75,7 @@ internal class GameApiClient : IGameApiClient
             { "transactionId", transactionId },
         };
 
-        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var token = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -122,7 +111,7 @@ internal class GameApiClient : IGameApiClient
             { "transactionId", transactionId }
         };
 
-        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var token = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -169,7 +158,7 @@ internal class GameApiClient : IGameApiClient
             { "userCode", userCode }
         };
 
-        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var token = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -211,7 +200,7 @@ internal class GameApiClient : IGameApiClient
             { "locale", locale }
         };
 
-        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var token = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -246,7 +235,7 @@ internal class GameApiClient : IGameApiClient
             { "userCode", userCode }
         };
 
-        var tolen = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var tolen = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -289,7 +278,7 @@ internal class GameApiClient : IGameApiClient
             { "filterBy", "update_date" }
         };
 
-        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var token = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -316,7 +305,7 @@ internal class GameApiClient : IGameApiClient
             throw new GameInterfaceException(jsonNode["code"]!.GetValue<string>());
         }
 
-        if (!wagers.Any())
+        if (wagers.Count == 0)
         {
             yield break;
         }
@@ -366,7 +355,7 @@ internal class GameApiClient : IGameApiClient
             { "transactionId", transactionId },
         };
 
-        var token = _tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
+        var token = tokenUtensil.GenerateToken(agentCode, agentKey, secretKey);
 
         Dictionary<string, string> headers = new Dictionary<string, string>
         {
@@ -397,11 +386,11 @@ internal class GameApiClient : IGameApiClient
     {
         logPrefix = $"{nameof(GameApiClient)}.{logPrefix}".ToLower();
 
-        _client.DefaultRequestHeaders.Clear();
+        client.DefaultRequestHeaders.Clear();
 
         foreach (var header in headers)
         {
-            _client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            client.DefaultRequestHeaders.Add(header.Key, header.Value);
         }
         var builder = new UriBuilder(apiUrl)
         {
@@ -416,7 +405,7 @@ internal class GameApiClient : IGameApiClient
         var url = new Uri(builder.Uri, HttpUtility.UrlDecode(builder.Query));
         var sw = Stopwatch.StartNew();
 
-        var httpResponseMessage = await _client.GetAsync(url, cancellationToken);
+        var httpResponseMessage = await client.GetAsync(url, cancellationToken);
 
         sw.Stop();
 
@@ -441,7 +430,7 @@ internal class GameApiClient : IGameApiClient
             ExecutionTimeMs = (int)sw.ElapsedMilliseconds,
             RecordedOn = DateTimeOffset.UtcNow
         };
-        _logger.LogInformation("{apiLogEvent}", JsonSerializer.Serialize(apiLogEvent));
+        logger.LogInformation("{apiLogEvent}", JsonSerializer.Serialize(apiLogEvent));
 
         _ = httpResponseMessage.EnsureSuccessStatusCode();
 
@@ -457,18 +446,18 @@ internal class GameApiClient : IGameApiClient
     {
         logPrefix = $"{nameof(GameApiClient)}.{logPrefix}".ToLower();
 
-        _client.DefaultRequestHeaders.Clear();
+        client.DefaultRequestHeaders.Clear();
 
         foreach (var header in headers)
         {
-            _client.DefaultRequestHeaders.Add(header.Key, header.Value);
+            client.DefaultRequestHeaders.Add(header.Key, header.Value);
         }
 
         var sw = Stopwatch.StartNew();
 
         HttpContent content = new FormUrlEncodedContent(parameters);
 
-        var httpResponseMessage = await _client.PostAsync(apiUrl, content, cancellationToken);
+        var httpResponseMessage = await client.PostAsync(apiUrl, content, cancellationToken);
 
         sw.Stop();
 
@@ -493,7 +482,7 @@ internal class GameApiClient : IGameApiClient
             ExecutionTimeMs = (int)sw.ElapsedMilliseconds,
             RecordedOn = DateTimeOffset.UtcNow
         };
-        _logger.LogInformation("{apiLogEvent}", JsonSerializer.Serialize(apiLogEvent));
+        logger.LogInformation("{apiLogEvent}", JsonSerializer.Serialize(apiLogEvent));
 
         _ = httpResponseMessage.EnsureSuccessStatusCode();
 

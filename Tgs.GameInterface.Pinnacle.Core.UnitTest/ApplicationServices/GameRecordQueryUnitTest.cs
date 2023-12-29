@@ -55,7 +55,7 @@ public class GameRecordQueryUnitTest
             EndTime: DateTimeOffset.Parse("2023-05-24T17:45:00+08:00"));
 
         var wagerResults = new WagerResult[] {
-            new WagerResult(
+            new(
                 50257869,
                 "Soccer",
                 29,
@@ -118,7 +118,7 @@ public class GameRecordQueryUnitTest
             EndTime: DateTimeOffset.Parse("2023-05-24T17:45:00+08:00"));
 
         var wagerResults = new WagerResult[] {
-            new WagerResult(
+            new(
                 50257869,
                 "Soccer",
                 29,
@@ -181,7 +181,7 @@ public class GameRecordQueryUnitTest
             EndTime: DateTimeOffset.Parse("2023-05-24T19:30:00+08:00"));
 
         var wagerResults = new WagerResult[] {
-            new WagerResult(
+            new(
                 50260945,
                 "Soccer",
                 29,
@@ -244,7 +244,7 @@ public class GameRecordQueryUnitTest
             EndTime: DateTimeOffset.Parse("2023-05-24T19:30:00+08:00"));
 
         var wagerResults = new WagerResult[] {
-            new WagerResult(
+            new(
                 50260945,
                 "Soccer",
                 29,
