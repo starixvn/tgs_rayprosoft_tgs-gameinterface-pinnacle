@@ -3,25 +3,25 @@
 namespace Tgs.GameInterface.Pinnacle.Core.ApplicationServices;
 
 internal class PlayerBalanceGetService(
-    IGameApiClient client) : IGetService<PlayerBalanceQuery, PlayerBalanceResult>
+	IGameApiClient client) : IGetService<PlayerBalanceQuery, PlayerBalanceResult>
 {
-    public async ValueTask<PlayerBalanceResult> GetAsync(PlayerBalanceQuery query, CancellationToken cancellationToken = default)
-    {
-        var result = await client
-            .InfoAsync(
-                apiUrl: query.ApiUrl,
-                agentCode: query.AgentCode,
-                agentKey: query.AgentKey,
-                secretKey: query.SecretKey,
-                userCode: query.PlayerCode,
-                cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+	public async ValueTask<PlayerBalanceResult> GetAsync(PlayerBalanceQuery query, CancellationToken cancellationToken = default)
+	{
+		var result = await client
+			.InfoAsync(
+				apiUrl: query.ApiUrl,
+				agentCode: query.AgentCode,
+				agentKey: query.AgentKey,
+				secretKey: query.SecretKey,
+				userCode: query.PlayerCode,
+				cancellationToken: cancellationToken)
+			.ConfigureAwait(false);
 
-        return new PlayerBalanceResult
-        {
-            IsPlayerExist = result.IsPlayerExist,
-            FreeBalance = result.AvailableBalance,
-            OutstandingBalance = result.Outstanding
-        };
-    }
+		return new PlayerBalanceResult
+		{
+			IsPlayerExist = result.IsPlayerExist,
+			FreeBalance = result.AvailableBalance,
+			OutstandingBalance = result.Outstanding
+		};
+	}
 }

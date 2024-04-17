@@ -2,5 +2,5 @@
 
 public interface ITokenUtensil
 {
-    public string GenerateToken(string agentCode, string agentKey, string secretKey);
+	public string GenerateToken(string agentCode, string agentKey, string secretKey);
 }

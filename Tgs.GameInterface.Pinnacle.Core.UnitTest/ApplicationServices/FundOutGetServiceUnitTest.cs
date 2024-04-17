@@ -6,39 +6,39 @@ namespace Tgs.GameInterface.Pinnacle.Core.UnitTest.ApplicationServices;
 
 public class FundOutGetServiceUnitTest
 {
-    [Fact]
-    public async Task Normal_Process()
-    {
-        var fakeGameApiClient = Substitute.For<IGameApiClient>();
+	[Fact]
+	public async Task Normal_Process()
+	{
+		var fakeGameApiClient = Substitute.For<IGameApiClient>();
 
-        var query = new FundOutQuery(
-            ApiUrl: new Uri("https://paapistg.oreo88.com"),
-            AgentCode: "V0201",
-            AgentKey: "8d0e9ac0-99d8-48c7-8307-bc328c4181f6",
-            SecretKey: "zenDIdY7Knuzmeen",
-            PlayerCode: "4ucmqplxb029",
-            TransactionId: Guid.NewGuid().ToString("N"),
-            Amount: 1m);
+		var query = new FundOutQuery(
+			ApiUrl: new Uri("https://paapistg.oreo88.com"),
+			AgentCode: "V0201",
+			AgentKey: "8d0e9ac0-99d8-48c7-8307-bc328c4181f6",
+			SecretKey: "zenDIdY7Knuzmeen",
+			PlayerCode: "4ucmqplxb029",
+			TransactionId: Guid.NewGuid().ToString("N"),
+			Amount: 1m);
 
-        var result = new DepositResult(
-            Res: "{\"amount\":1,\"loginId\":\"4ucmqplxb029\",\"userCode\":\"V020100001\",\"availableBalance\":0.00}");
-        _ = fakeGameApiClient.DepositAsync(
-            Arg.Is(query.ApiUrl),
-            Arg.Is(query.AgentCode),
-            Arg.Is(query.AgentKey),
-            Arg.Is(query.SecretKey),
-            Arg.Is(query.PlayerCode),
-            Arg.Is(query.TransactionId),
-            Arg.Is(query.Amount),
-            Arg.Any<CancellationToken>())
-            .Returns(result);
+		var result = new DepositResult(
+			Res: "{\"amount\":1,\"loginId\":\"4ucmqplxb029\",\"userCode\":\"V020100001\",\"availableBalance\":0.00}");
+		_ = fakeGameApiClient.DepositAsync(
+			Arg.Is(query.ApiUrl),
+			Arg.Is(query.AgentCode),
+			Arg.Is(query.AgentKey),
+			Arg.Is(query.SecretKey),
+			Arg.Is(query.PlayerCode),
+			Arg.Is(query.TransactionId),
+			Arg.Is(query.Amount),
+			Arg.Any<CancellationToken>())
+			.Returns(result);
 
-        var client = new FundOutGetService(
-            fakeGameApiClient);
+		var client = new FundOutGetService(
+			fakeGameApiClient);
 
-        var actual = await client.GetAsync(query);
+		var actual = await client.GetAsync(query);
 
-        Assert.NotNull(actual);
-        Assert.Equal(result.Res, actual.Res);
-    }
+		Assert.NotNull(actual);
+		Assert.Equal(result.Res, actual.Res);
+	}
 }
