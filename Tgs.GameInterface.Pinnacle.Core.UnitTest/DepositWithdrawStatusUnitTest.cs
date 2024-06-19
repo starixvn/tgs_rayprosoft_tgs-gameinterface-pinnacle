@@ -8,7 +8,7 @@ namespace Tgs.GameInterface.Pinnacle.Core.UnitTest;
 public class DepositWithdrawStatusUnitTest
 {
 	[Fact]
-	public async void FAILED()
+	public async Task FAILED()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -57,7 +57,7 @@ public class DepositWithdrawStatusUnitTest
 	}
 
 	[Fact]
-	public async void NOT_EXISTS()
+	public async Task NOT_EXISTS()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -106,7 +106,7 @@ public class DepositWithdrawStatusUnitTest
 	}
 
 	[Fact]
-	public async void SUCCESS()
+	public async Task SUCCESS()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";

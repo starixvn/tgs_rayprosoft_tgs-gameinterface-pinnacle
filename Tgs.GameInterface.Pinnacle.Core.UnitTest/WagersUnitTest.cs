@@ -12,7 +12,7 @@ namespace Tgs.GameInterface.Pinnacle.Core.UnitTest;
 public class WagersUnitTest
 {
 	[Fact]
-	public async void Authentication_Required()
+	public async Task Authentication_Required()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -69,7 +69,7 @@ public class WagersUnitTest
 	}
 
 	[Fact]
-	public async void DateFrom_Should_Be_Earlier_Than_DateTo()
+	public async Task DateFrom_Should_Be_Earlier_Than_DateTo()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -125,7 +125,7 @@ public class WagersUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process_Emty()
+	public async Task Normal_Process_Emty()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -183,7 +183,7 @@ public class WagersUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process_Open()
+	public async Task Normal_Process_Open()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -251,7 +251,7 @@ public class WagersUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process_Parlay()
+	public async Task Normal_Process_Parlay()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -319,7 +319,7 @@ public class WagersUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process_Pending()
+	public async Task Normal_Process_Pending()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -387,7 +387,7 @@ public class WagersUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process_Settled_Lose()
+	public async Task Normal_Process_Settled_Lose()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -455,7 +455,7 @@ public class WagersUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process_Settled_Win()
+	public async Task Normal_Process_Settled_Win()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
