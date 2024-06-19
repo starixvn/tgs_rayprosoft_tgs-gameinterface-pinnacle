@@ -8,7 +8,7 @@ namespace Tgs.GameInterface.Pinnacle.Core.UnitTest;
 public class LogoutUnitTest
 {
 	[Fact]
-	public async void Authentication_Required()
+	public async Task Authentication_Required()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -57,7 +57,7 @@ public class LogoutUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process()
+	public async Task Normal_Process()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -104,7 +104,7 @@ public class LogoutUnitTest
 	}
 
 	[Fact]
-	public async void The_User_Does_Not_Exist_In_The_System()
+	public async Task The_User_Does_Not_Exist_In_The_System()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";

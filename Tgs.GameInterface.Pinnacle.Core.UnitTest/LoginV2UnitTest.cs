@@ -8,7 +8,7 @@ namespace Tgs.GameInterface.Pinnacle.Core.UnitTest;
 public class LoginV2UnitTest
 {
 	[Fact]
-	public async void Authentication_Required()
+	public async Task Authentication_Required()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -60,7 +60,7 @@ public class LoginV2UnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process()
+	public async Task Normal_Process()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";

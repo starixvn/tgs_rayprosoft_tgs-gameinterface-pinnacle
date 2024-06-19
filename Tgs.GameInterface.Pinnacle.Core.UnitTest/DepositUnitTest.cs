@@ -9,7 +9,7 @@ namespace Tgs.GameInterface.Pinnacle.Core.UnitTest;
 public class DepositUnitTest
 {
 	[Fact]
-	public async void Authentication_Required()
+	public async Task Authentication_Required()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -64,7 +64,7 @@ public class DepositUnitTest
 	}
 
 	[Fact]
-	public async void Normal_Process()
+	public async Task Normal_Process()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
@@ -120,7 +120,7 @@ public class DepositUnitTest
 	}
 
 	[Fact]
-	public async void The_Login_ID_Already_Exists_In_The_System()
+	public async Task The_Login_ID_Already_Exists_In_The_System()
 	{
 		var apiUrl = new Uri("https://paapistg.oreo88.com");
 		var agentCode = "V0201";
