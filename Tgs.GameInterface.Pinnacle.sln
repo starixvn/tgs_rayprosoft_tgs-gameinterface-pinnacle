@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.Pinnacle.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.Pinnacle.Core.UnitTest", "Tgs.GameInterface.Pinnacle.Core.UnitTest\Tgs.GameInterface.Pinnacle.Core.UnitTest.csproj", "{3F8DD3EB-0FE6-4D51-AAB5-1CB9EDE0D661}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameInterface.Pinnacle.Client", "Tgs.GameInterface.Pinnacle.Client\Tgs.GameInterface.Pinnacle.Client.csproj", "{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tgs.GameInterface.Pinnacle.Client", "Tgs.GameInterface.Pinnacle.Client\Tgs.GameInterface.Pinnacle.Client.csproj", "{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tgs.GameInterface.Pinnacle.Protos", "Tgs.GameInterface.Pinnacle.Protos\Tgs.GameInterface.Pinnacle.Protos.csproj", "{CEA66726-7865-4DD2-8989-71160C29EA0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92F1D8C0-83B0-4C69-9404-1A64B8DC54D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEA66726-7865-4DD2-8989-71160C29EA0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEA66726-7865-4DD2-8989-71160C29EA0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEA66726-7865-4DD2-8989-71160C29EA0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEA66726-7865-4DD2-8989-71160C29EA0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

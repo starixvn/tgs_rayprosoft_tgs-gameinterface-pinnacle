@@ -5,7 +5,7 @@ import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Tgs.GameInterface.Pinnacle.Protos";
 
-package gameinterfacepinnacle;
+package GameInterfacePinnacle;
 
 // The greeting service definition.
 service GameInterfacePinnacle {
@@ -99,7 +99,7 @@ message PlayerBalanceReply {
 }
 
 message FundReply {
-	string res = 1;
+	string resp = 1;
 }
 
 message GameUrlReply{

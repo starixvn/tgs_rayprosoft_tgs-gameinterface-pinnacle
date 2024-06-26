@@ -46,7 +46,7 @@ public class GameInterfacePinnacleGrpcService(
 
 		return new FundReply
 		{
-			Res = result.Res
+			Resp = result.Resp
 		};
 	}
 
@@ -69,7 +69,7 @@ public class GameInterfacePinnacleGrpcService(
 
 		return new FundReply
 		{
-			Res = result.Res
+			Resp = result.Resp
 		};
 	}
 
