@@ -20,6 +20,6 @@ internal class FundOutGetService(
 		 .ConfigureAwait(false);
 
 		return new FundResult(
-			Res: result.Res);
+			Resp: result.Resp);
 	}
 }

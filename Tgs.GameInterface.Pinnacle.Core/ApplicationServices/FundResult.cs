@@ -1,3 +1,3 @@
 ﻿namespace Tgs.GameInterface.Pinnacle.Core.ApplicationServices;
 
-public record FundResult(string Res);
+public record FundResult(string Resp);

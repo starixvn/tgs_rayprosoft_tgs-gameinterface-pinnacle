@@ -116,7 +116,7 @@ public class DepositUnitTest
 			amount: amount);
 
 		Assert.NotNull(actual);
-		Assert.Equal(content, actual.Res);
+		Assert.Equal(content, actual.Resp);
 	}
 
 	[Fact]

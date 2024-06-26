@@ -21,7 +21,7 @@ public class FundOutGetServiceUnitTest
 			Amount: 1m);
 
 		var result = new DepositResult(
-			Res: "{\"amount\":1,\"loginId\":\"4ucmqplxb029\",\"userCode\":\"V020100001\",\"availableBalance\":0.00}");
+			Resp: "{\"amount\":1,\"loginId\":\"4ucmqplxb029\",\"userCode\":\"V020100001\",\"availableBalance\":0.00}");
 		_ = fakeGameApiClient.DepositAsync(
 			Arg.Is(query.ApiUrl),
 			Arg.Is(query.AgentCode),
@@ -39,6 +39,6 @@ public class FundOutGetServiceUnitTest
 		var actual = await client.GetAsync(query);
 
 		Assert.NotNull(actual);
-		Assert.Equal(result.Res, actual.Res);
+		Assert.Equal(result.Resp, actual.Resp);
 	}
 }

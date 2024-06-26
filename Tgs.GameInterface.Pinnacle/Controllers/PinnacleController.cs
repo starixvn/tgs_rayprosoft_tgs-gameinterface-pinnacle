@@ -49,7 +49,7 @@ public class PinnacleController : ControllerBase
 				cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false);
 
-		return new FundResultViewModel(Res: result.Res);
+		return new FundResultViewModel(Resp: result.Resp);
 	}
 
 	/// <summary>
@@ -92,7 +92,7 @@ public class PinnacleController : ControllerBase
 				cancellationToken: HttpContext.RequestAborted)
 			.ConfigureAwait(false);
 
-		return new FundResultViewModel(Res: result.Res);
+		return new FundResultViewModel(Resp: result.Resp);
 	}
 
 	/// <summary>
