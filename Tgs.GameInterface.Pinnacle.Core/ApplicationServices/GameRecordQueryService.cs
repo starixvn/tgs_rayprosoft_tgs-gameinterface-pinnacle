@@ -42,6 +42,11 @@ internal class GameRecordQueryService(
 				if (isClosed && !isVoid)
 				{
 					settle = result.WinLoss + result.Stake;
+
+					if (settle < 0)
+					{
+						settle = 0;
+					}
 				}
 			}
 
