@@ -292,4 +292,67 @@ public class GameRecordQueryUnitTest
 		Assert.Equal(wagerResults.Single().WinLoss, actual.Single().WinLoss);
 		Assert.NotNull(actual.Single().AdditionalData);
 	}
+
+	[Fact]
+	public async Task Normal_Process_Settled_Lose_Settle_Is_0()
+	{
+		var fakeGameApiClient = Substitute.For<IGameApiClient>();
+
+		var query = new GameRecordQuery(
+			ApiUrl: new Uri("https://paapistg.oreo88.com"),
+			AgentCode: "V0201",
+			AgentKey: "8d0e9ac0-99d8-48c7-8307-bc328c4181f6",
+			SecretKey: "zenDIdY7Knuzmeen",
+			StartTime: DateTimeOffset.Parse("2023-05-24T19:25:00+08:00"),
+			EndTime: DateTimeOffset.Parse("2023-05-24T19:30:00+08:00"));
+
+		var wagerResults = new WagerResult[] {
+			new(
+				2641694606,
+				"Soccer",
+				29,
+				"4ucmqplxb029",
+				WagerStatus.SETTLED,
+				DateTimeOffset.Parse("2024-09-22T14:40:54-04:00"),
+				DateTimeOffset.Parse("2024-09-22T15:01:27-04:00"),
+				500.0m,
+				846.02m,
+				-846.02m,
+				"{\"wagerId\":2641694606,\"eventId\":1597646509,\"eventName\":\"New York Liberty-vs-Atlanta Dream\",\"parentEventName\":null,\"headToHead\":null,\"wagerDateFm\":\"2024-09-22 14:40:54\",\"eventDateFm\":\"2024-09-22 13:02:00\",\"settleDateFm\":\"2024-09-22 15:01:27\",\"resettleDateFm\":null,\"status\":\"SETTLED\",\"homeTeam\":\"New York Liberty\",\"awayTeam\":\"Atlanta Dream\",\"selection\":\"New York Liberty\",\"handicap\":-18.0,\"odds\":1.591,\"oddsFormat\":1,\"betType\":2,\"league\":\"WNBA\",\"leagueId\":578,\"stake\":500.0,\"sportId\":4,\"sport\":\"Basketball\",\"currencyCode\":\"PHP\",\"inplayScore\":\"\",\"inPlay\":true,\"homePitcher\":null,\"awayPitcher\":null,\"homePitcherName\":null,\"awayPitcherName\":null,\"period\":0,\"cancellationStatus\":null,\"parlaySelections\":[],\"category\":null,\"toWin\":500.0,\"toRisk\":846.02,\"product\":\"SB\",\"isResettle\":false,\"parlayMixOdds\":1.591,\"parlayFinalOdds\":1.591,\"wagerType\":\"single\",\"competitors\":[],\"userCode\":\"C60040046M\",\"loginId\":\"4un34gr5vft4\",\"winLoss\":-846.02,\"turnover\":846.02,\"scores\":[{\"period\":0,\"score\":\"83-69\"},{\"period\":1,\"score\":\"48-30\"},{\"period\":2,\"score\":\"35-39\"},{\"period\":3,\"score\":\"29-16\"},{\"period\":4,\"score\":\"19-14\"},{\"period\":5,\"score\":\"21-19\"},{\"period\":6,\"score\":\"14-20\"}],\"result\":\"LOSE\",\"volume\":500.0,\"view\":\"D-Compact\"}" )
+		};
+		_ = fakeGameApiClient
+			.WagersAsync(
+				apiUrl: Arg.Is(query.ApiUrl),
+				agentCode: Arg.Is(query.AgentCode),
+				agentKey: Arg.Is(query.AgentKey),
+				secretKey: Arg.Is(query.SecretKey),
+				dateFrom: Arg.Is(query.StartTime),
+				dateTo: Arg.Is(query.EndTime),
+				cancellationToken: Arg.Any<CancellationToken>())
+			.Returns(wagerResults.ToAsyncEnumerable());
+
+		var client = new GameRecordQueryService(
+			fakeGameApiClient);
+
+		var actual = await client.QueryAsync(
+			query)
+			.ToArrayAsync()
+			?? Enumerable.Empty<GameRecordResult>();
+
+		Assert.NotNull(actual);
+		Assert.True(actual.Any());
+		Assert.Equal(wagerResults.Single().WagerId.ToString(), actual.Single().ExternalRoundId);
+		Assert.Equal(wagerResults.Single().Sport.ToString(), actual.Single().ExternalGame);
+		Assert.Equal(wagerResults.Single().SportId.ToString(), actual.Single().ExternalGameId);
+		Assert.Equal(wagerResults.Single().LoginId, actual.Single().PlayerCode);
+		Assert.True(actual.Single().IsClosed);
+		Assert.False(actual.Single().IsVoid);
+		Assert.Equal(wagerResults.Single().WagerDateFm, actual.Single().ExternalCreatedOn);
+		Assert.Equal(wagerResults.Single().SettleDateFm, actual.Single().ExternalClosedOn);
+		Assert.Equal(wagerResults.Single().Stake, actual.Single().Bet);
+		Assert.Equal(wagerResults.Single().Turnover, actual.Single().Turnover);
+		Assert.Equal(0, actual.Single().Settle);
+		Assert.Equal(wagerResults.Single().WinLoss, actual.Single().WinLoss);
+		Assert.NotNull(actual.Single().AdditionalData);
+	}
 }
